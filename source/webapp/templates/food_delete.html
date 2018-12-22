@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить{% endblock %}
+
+{% block content %}
+    <h5>Вы уверены, что хотите удалить {{ food.name }}?</h5>
+    <form action="#" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+{% endblock %}
