@@ -19,13 +19,13 @@ class FoodCreateView(CreateView):
     model = Food
     template_name = 'food_create.html'
     form_class = FoodForm
-    success_url = reverse_lazy('food_detail.html')
+    success_url = reverse_lazy('food_detail')
 
 class FoodUpdateView(UpdateView):
     model = Food
     template_name = 'food_update.html'
     form_class = FoodForm
-    success_url = reverse_lazy('article_list')
+    success_url = reverse_lazy('food_detail')
 
 
 class FoodDeleteView(DeleteView):

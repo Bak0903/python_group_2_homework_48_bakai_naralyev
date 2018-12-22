@@ -5,4 +5,5 @@
     <p>{{ food.description }}</p>
     <p>{{ food.price }}</p>
     <img src="{{ food.photo }}" alt="Картинка еды">
+    <a class="" href="{% url 'food_update' food.pk %}">Редактировать</a>
 {% endblock %}

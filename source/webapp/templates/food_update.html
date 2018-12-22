@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Изменить статью{% endblock %}
+{% block content %}
+    <h1>Редактирование проекта</h1>
+    <form action="{% url 'food_update' form.instance.pk %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+{% endblock %}
