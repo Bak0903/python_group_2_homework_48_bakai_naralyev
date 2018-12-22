@@ -13,7 +13,7 @@ class Employee(models.Model):
 class Food(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название')
     description = models.TextField(max_length=1000, null=True, blank=True, verbose_name='Описание')
-    photo = models.ImageField(verbose_name='Фотография')
+    photo = models.ImageField(null=True, blank=True, verbose_name='Фотография')
     price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Цена')
 
     def __str__(self):
