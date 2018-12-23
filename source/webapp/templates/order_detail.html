@@ -6,9 +6,15 @@
     <p>На имя: {{ order.contact_name }}</p>
     <p>По адресу:{{ order.delivery_address }}</p>
     <p>{{ order.contact_phone }}</p>
+    {% if order.status != 'В пути' or status.pk != 'Доставлен' %}
+    <a href="{% url 'order_update' order.pk %}"><button type="submit" class="btn btn-primary">Редактировать</button></a><br/>
+    {% endif %}
+    <br/>
+
     {% for order_food in order.foods.all %}
-        <p>{{ order_food.food.name }} - {{ order_food.amount }}</p>
+        <p>{{ order_food.food.name }} - {{ order_food.amount }}</p> <a class="" href="{% url 'food_delete' order_food.pk %}">Удалить</a>
 
     {% endfor %}
+    <br/>
     <a href="{% url 'orderfood' order.pk %}"><button type="submit" class="btn btn-primary">Добавить блюдо</button></a><br/>
-{% endblock %}
+    {% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Новый заказ{% endblock %}
+{% block content %}
+    <h1>Редакировать данные</h1>
+
+    <form action="{% url 'order_update' form.instance.pk%}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Далее</button>
+    </form>
+{% endblock %}

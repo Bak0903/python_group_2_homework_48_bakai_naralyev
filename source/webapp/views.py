@@ -70,6 +70,14 @@ class OrderfoodCreateView(CreateView):
         return reverse('order_detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
+class OrderfoodDeleteView(DeleteView):
+    model = OrderFood
+    template_name = 'orderfood_delete.html'
+
+    def get_success_url(self):
+        return reverse('order_detail', kwargs={'pk': self.kwargs.get('pk')})
+
+
 class OrderUpdateView(UpdateView):
     model = Order
     template_name = 'order_update.html'
