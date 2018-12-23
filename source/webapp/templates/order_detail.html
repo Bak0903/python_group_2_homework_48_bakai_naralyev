@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Заказ{% endblock %}
 {% block content %}
-    {{ order.contact_phone }}
+    <p>Номер вашего заказа: {{ order.pk }}</p>
+    <p>Статус вашего заказа: {{ order.status }}</p>
+    <p>На имя: {{ order.contact_name }}</p>
+    <p>По адресу:{{ order.delivery_address }}</p>
+    <p>{{ order.contact_phone }}</p>
     {% for order_food in order.foods.all %}
-        {{ order_food.food.name }}
-    {% endfor %}
-{% endblock %}
+        <p>{{ order_food.food.name }} - {{ order_food.amount }}</p>
 
-{# Откройте /order/<pk>, чтобы посмотреть список блюд для заказа на этой странице #}
+    {% endfor %}
+    <a href="{% url 'orderfood' order.pk %}"><button type="submit" class="btn btn-primary">Добавить блюдо</button></a><br/>
+{% endblock %}

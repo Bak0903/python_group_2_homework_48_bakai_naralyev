@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Новый заказ{% endblock %}
+{% block content %}
+    <h1>Новый заказ</h1>
+    <form action="{% url 'orderfood' order_pk %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" value="Добавить">Выбрать еду</button>
+    </form>
+{% endblock %}

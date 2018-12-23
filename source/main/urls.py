@@ -4,7 +4,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from webapp.views import FoodDetailView, OrderDetailView, FoodListView, \
-                            FoodCreateView, FoodDeleteView, FoodUpdateView
+                            FoodCreateView, FoodDeleteView, FoodUpdateView,\
+                            OrderCreateView, OrderfoodCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,6 +15,8 @@ urlpatterns = [
     path('food/create', FoodCreateView.as_view(), name='food_create'),
     path('food/<int:pk>/update', FoodUpdateView.as_view(), name='food_update'),
     path('food/<int:pk>/delete', FoodDeleteView.as_view(), name='food_delete'),
+    path('order/create', OrderCreateView.as_view(), name='order_create'),
+    path('order/<int:pk>/orderfood', OrderfoodCreateView.as_view(), name='orderfood'),
 
 ]
 

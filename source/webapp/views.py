@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from webapp.models import Food, OrderFood, Order, Employee
-from webapp.form import FoodForm
+from webapp.form import FoodForm, OrderForm, OrderfoodForm
 from django.urls import reverse_lazy
 
 
@@ -23,16 +23,57 @@ class FoodCreateView(CreateView):
     model = Food
     template_name = 'food_create.html'
     form_class = FoodForm
-    success_url = reverse_lazy('food_list')
+
+    def get_success_url(self):
+        return reverse('food_detail', kwargs={'pk': self.object.pk})
+
 
 class FoodUpdateView(UpdateView):
     model = Food
     template_name = 'food_update.html'
     form_class = FoodForm
-    success_url = reverse_lazy('food_list')
+
+    def get_success_url(self):
+        return reverse('food_detail', kwargs={'pk': self.object.pk})
 
 
 class FoodDeleteView(DeleteView):
     model = Food
     template_name = 'food_delete.html'
     success_url = reverse_lazy('food_list')
+
+
+class OrderCreateView(CreateView):
+    model = Order
+    template_name = 'order_create.html'
+    form_class = OrderForm
+
+    def get_success_url(self):
+        return reverse('order_detail', kwargs={'pk': self.object.pk})
+
+
+class OrderfoodCreateView(CreateView):
+    model = OrderFood
+    template_name = 'orderfood_create.html'
+    form_class = OrderfoodForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_pk'] = self.kwargs.get('pk')
+        return context
+
+    def form_valid(self, form):
+        form.instance.order = Order.objects.get(pk = self.kwargs.get('pk'))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('order_detail', kwargs={'pk': self.kwargs.get('pk')})
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    template_name = 'order_update.html'
+    form_class = OrderForm
+
+    def get_success_url(self):
+        return reverse('order_detail', kwargs={'pk': self.object.pk})

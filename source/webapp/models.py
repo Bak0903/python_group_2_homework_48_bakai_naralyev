@@ -13,7 +13,7 @@ class Employee(models.Model):
 class Food(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название')
     description = models.TextField(max_length=1000, null=True, blank=True, verbose_name='Описание')
-    photo = models.ImageField(null=True, blank=True, verbose_name='Фотография')
+    photo = models.ImageField(verbose_name='Фотография')
     price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Цена')
 
     def __str__(self):
@@ -21,11 +21,11 @@ class Food(models.Model):
 
 
 class Order(models.Model):
-    STATUS_NEW = 'new'
-    STATUS_PREPARING = 'preparing'
-    STATUS_ON_WAY = 'on_way'
-    STATUS_DELIVERED = 'delivered'
-    STATUS_CANCELED = 'canceled'
+    STATUS_NEW = 'Новый'
+    STATUS_PREPARING = 'Готовится'
+    STATUS_ON_WAY = 'В пути'
+    STATUS_DELIVERED = 'Доставлен'
+    STATUS_CANCELED = 'Отменён'
 
     STATUS_CHOICES = (
         (STATUS_NEW, 'Новый'),
