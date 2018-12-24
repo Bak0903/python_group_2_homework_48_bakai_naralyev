@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Главная страница{% endblock %}
+{% block content %}
+    <h1>Список готовых заказов</h1>
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Заказчик</th>
+      <th scope="col">Телефонный номер</th>
+      <th scope="col">Статус</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in order_list %}
+    {% if order.status == 'Готов' or order.status == 'В пути' %}
+    <tr>
+      <th scope="row"><a href="{% url 'order_detail' order.pk %}">{{ order.pk }}</a></th>
+      <td>{{ order.contact_name }}</td>
+      <td>{{ order.contact_phone }}</td>
+      <td>{{ order.status }}</td>
+      <td><a href="{% url 'order_detail' order.pk %}">Подробнее...</a></td>
+      <td>
+      {% if order.status == 'Готов' %}
+      <a href="{% url 'courier' order.pk %}"><button type="submit" class="btn btn-primary mb-2">Взять заказ</button></a><br/>
+      {% endif %}
+      </td>
+      <td>
+      {% if order.status == 'В пути' %}
+       <a href="{% url 'order_delivered' order.pk %}"><button type="submit" class="btn btn-primary mb-2">Доставлен</button></a><br/>
+      {% endif %}
+      </td>
+
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

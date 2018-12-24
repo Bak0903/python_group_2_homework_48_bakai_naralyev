@@ -14,6 +14,9 @@
         <a href="{% url 'order_update' order.pk %}" class="card-link">
         <button type="submit" class="btn btn-primary">Редакировать</button>
         </a>
+        <a href="{% url 'order_cancel' order.pk %}" class="card-link">
+        <button type="submit" class="btn btn-primary">Отменить</button>
+        </a>
         {% endif %}
       </div>
     </div>
@@ -28,7 +31,7 @@
                   <td>{{ order_food.amount }}</td>
                   <td>
                     <a class="" href="{% url 'food_delete' order_food.pk %}">
-                    {% if order.status != 'В пути' or status.pk != 'Доставлен' %}
+                    {% if order.status == 'Новое' %}
                         <button type="submit" class="btn btn-primary">Удалить</button>
                     {% endif %}
                     </a>
@@ -40,4 +43,5 @@
     </div>
     <br/>
     <a href="{% url 'orderfood' order.pk %}"><button type="submit" class="btn btn-primary mb-2">Добавить блюдо</button></a><br/>
+    <a href="{% url 'order_done' order.pk %}"><button type="submit" class="btn btn-primary mb-2">Заказ готов</button></a>
     {% endblock %}

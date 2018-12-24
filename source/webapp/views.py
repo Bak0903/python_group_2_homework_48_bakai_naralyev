@@ -1,7 +1,7 @@
-from django.shortcuts import reverse
+from django.shortcuts import reverse,redirect, get_object_or_404, render
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from webapp.models import Food, OrderFood, Order, Employee
-from webapp.form import FoodForm, OrderForm, OrderfoodForm
+from webapp.form import FoodForm, OrderForm, OrderfoodForm, CourierForm
 from django.urls import reverse_lazy
 
 
@@ -13,6 +13,10 @@ class FoodListView(ListView):
 class OrderListView(ListView):
     model = Order
     template_name = 'order_list.html'
+
+class CourierListView(ListView):
+    model = Order
+    template_name = 'for_courier.html'
 
 
 class FoodDetailView(DetailView):
@@ -91,3 +95,36 @@ class OrderUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('order_detail', kwargs={'pk': self.object.pk})
+
+
+
+def order_cancel(request, order_pk):
+    order = get_object_or_404(Order, pk=order_pk)
+    order.status = 'Отменён'
+    order.save()
+    return redirect('order_list')
+
+
+def order_done(request, order_pk):
+    order = get_object_or_404(Order, pk=order_pk)
+    order.status = 'Готов'
+    order.save()
+    return redirect('order_list')
+
+
+def order_delivered(request, order_pk):
+    order = get_object_or_404(Order, pk=order_pk)
+    order.status = 'Доставлен'
+    order.save()
+    return redirect('order_list')
+
+
+class CourierUpdateView(UpdateView):
+    model = Order
+    template_name = 'choose_courier.html'
+    form_class = CourierForm
+
+    def get_success_url(self):
+        return reverse('order_list')
+
+

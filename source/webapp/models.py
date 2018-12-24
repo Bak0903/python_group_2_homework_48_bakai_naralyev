@@ -22,7 +22,7 @@ class Food(models.Model):
 
 class Order(models.Model):
     STATUS_NEW = 'Новый'
-    STATUS_PREPARING = 'Готовится'
+    STATUS_PREPARING = 'Готов'
     STATUS_ON_WAY = 'В пути'
     STATUS_DELIVERED = 'Доставлен'
     STATUS_CANCELED = 'Отменён'
