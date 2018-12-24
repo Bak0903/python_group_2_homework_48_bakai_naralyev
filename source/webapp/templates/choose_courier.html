@@ -3,10 +3,9 @@
 {% block content %}
     <h1>Новый заказ</h1>
     <h2>Для начала введите свои данные:</h2>
-    <form action="{% url 'order_create'%}" method="post">
+    <form action="{% url 'courier' form.instance.pk %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>
 {% endblock %}

@@ -85,7 +85,7 @@ class OrderfoodDeleteView(DeleteView):
     template_name = 'orderfood_delete.html'
 
     def get_success_url(self):
-        return reverse('order_detail', kwargs={'pk': self.kwargs.get('pk')})
+        return reverse('order_detail', kwargs={'pk': get_object_or_404(OrderFood, pk=self.kwargs.get('pk')).order.pk})
 
 
 class OrderUpdateView(UpdateView):
@@ -125,6 +125,4 @@ class CourierUpdateView(UpdateView):
     form_class = CourierForm
 
     def get_success_url(self):
-        return reverse('order_list')
-
-
+        return reverse('courier_list')

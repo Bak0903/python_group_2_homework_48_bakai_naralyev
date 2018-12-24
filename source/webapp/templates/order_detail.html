@@ -8,7 +8,7 @@
         <h5 class="card-title">Номер заказа: {{ order.pk }}</h5>
         <p class="card-text">Статус заказа: {{ order.status }}</p>
         <p class="card-text">Имя заказщика: {{ order.contact_name }}</p>
-        <p class="card-text">По адресу:{{ order.delivery_address }}</p>
+        <p class="card-text">По адресу: {{ order.delivery_address }}</p>
         <p class="card-text">Номер заказщика: {{ order.contact_phone }}</p>
         {% if order.status != 'В пути' or order.status != 'Доставлен' %}
         <a href="{% url 'order_update' order.pk %}" class="card-link">
@@ -30,11 +30,13 @@
                   <th scope="row">{{ order_food.food.name }}</th>
                   <td>{{ order_food.amount }}</td>
                   <td>
+
+                    {% if order.status == 'Новый' %}
                     <a class="" href="{% url 'food_delete' order_food.pk %}">
-                    {% if order.status == 'Новое' %}
                         <button type="submit" class="btn btn-primary">Удалить</button>
-                    {% endif %}
                     </a>
+                    {% endif %}
+
                   </td>
               </tr>
           {% endfor %}
