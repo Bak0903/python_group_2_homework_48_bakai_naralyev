@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Блюдо{% endblock %}
 {% block content %}
-    <h1>{{ food.name }}</h1>
-    <p>{{ food.description }}</p>
-    <p>{{ food.price }}</p>
-    <img src="http://localhost:8000/uploads/{{ food.photo }}" alt="">
-    <a class="" href="{% url 'food_update' food.pk %}">Редактировать</a>
-    <a class="" href="{% url 'food_delete' food.pk %}">Удаление</a>
+
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ food.name }}</h5>
+        <p class="card-text">{{ food.description }}</p>
+        <a href="{% url 'food_delete' food.pk %}" class="btn btn-primary float-right ml-2">Удалить</a>
+        <a href="{% url 'food_update' food.pk %}" class="btn btn-primary float-right ml-2">Редактировать</a>
+      </div>
+      <img class="card-img-bottom" src="../uploads/{{ food.photo }}" alt="Card image cap">
+    </div>
+
 {% endblock %}

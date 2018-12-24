@@ -20,8 +20,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav container">
-                  <li class="nav-item"><a class="nav-link" href="{% url 'food_list' %}">Список еды</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{% url 'food_create' %}">Создание еды</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'order_list' %}">Заказы</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'food_list' %}">Меню</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'order_create' %}">Новый заказ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'food_create' %}">Новое блюдо</a></li>
             {% block menu %}{% endblock %}
         </ul>
     </div>

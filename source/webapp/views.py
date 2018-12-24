@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import reverse
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from webapp.models import Food, OrderFood, Order, Employee
 from webapp.form import FoodForm, OrderForm, OrderfoodForm
@@ -8,6 +8,12 @@ from django.urls import reverse_lazy
 class FoodListView(ListView):
     model = Food
     template_name = 'food_list.html'
+
+
+class OrderListView(ListView):
+    model = Order
+    template_name = 'order_list.html'
+
 
 class FoodDetailView(DetailView):
     model = Food

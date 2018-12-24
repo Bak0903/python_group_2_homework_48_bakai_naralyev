@@ -1,20 +1,43 @@
 {% extends 'base.html' %}
 {% block title %}Заказ{% endblock %}
 {% block content %}
-    <p>Номер вашего заказа: {{ order.pk }}</p>
-    <p>Статус вашего заказа: {{ order.status }}</p>
-    <p>На имя: {{ order.contact_name }}</p>
-    <p>По адресу:{{ order.delivery_address }}</p>
-    <p>{{ order.contact_phone }}</p>
-    {% if order.status != 'В пути' or status.pk != 'Доставлен' %}
-    <a href="{% url 'order_update' order.pk %}"><button type="submit" class="btn btn-primary">Редактировать</button></a><br/>
-    {% endif %}
-    <br/>
 
-    {% for order_food in order.foods.all %}
-        <p>{{ order_food.food.name }} - {{ order_food.amount }}</p> <a class="" href="{% url 'food_delete' order_food.pk %}">Удалить</a>
 
-    {% endfor %}
+    <div class="card bg-info">
+      <div class="card-body">
+        <h5 class="card-title">Номер заказа: {{ order.pk }}</h5>
+        <p class="card-text">Статус заказа: {{ order.status }}</p>
+        <p class="card-text">Имя заказщика: {{ order.contact_name }}</p>
+        <p class="card-text">По адресу:{{ order.delivery_address }}</p>
+        <p class="card-text">Номер заказщика: {{ order.contact_phone }}</p>
+        {% if order.status != 'В пути' or order.status != 'Доставлен' %}
+        <a href="{% url 'order_update' order.pk %}" class="card-link">
+        <button type="submit" class="btn btn-primary">Редакировать</button>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+     <div class="card mt-2 bg-warning">
+      <div class="card-body">
+        <h5 class="card-title">Корзина</h5>
+        <table class="table">
+          <tbody>
+          {% for order_food in order.foods.all %}
+              <tr>
+                  <th scope="row">{{ order_food.food.name }}</th>
+                  <td>{{ order_food.amount }}</td>
+                  <td>
+                    <a class="" href="{% url 'food_delete' order_food.pk %}">
+                    {% if order.status != 'В пути' or status.pk != 'Доставлен' %}
+                        <button type="submit" class="btn btn-primary">Удалить</button>
+                    {% endif %}
+                    </a>
+                  </td>
+              </tr>
+          {% endfor %}
+          </tbody>
+      </div>
+    </div>
     <br/>
-    <a href="{% url 'orderfood' order.pk %}"><button type="submit" class="btn btn-primary">Добавить блюдо</button></a><br/>
+    <a href="{% url 'orderfood' order.pk %}"><button type="submit" class="btn btn-primary mb-2">Добавить блюдо</button></a><br/>
     {% endblock %}

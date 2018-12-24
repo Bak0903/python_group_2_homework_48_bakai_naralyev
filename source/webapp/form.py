@@ -22,14 +22,10 @@ class FoodForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['contact_name', 'contact_phone', 'delivery_address']
+        exclude = ['courier', 'status']
 
 
 class OrderfoodForm(forms.ModelForm):
     class Meta:
         model = OrderFood
         exclude = ['order']
-
-
-
-
