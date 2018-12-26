@@ -5,6 +5,12 @@ from webapp.form import FoodForm, OrderForm, OrderfoodForm, CourierForm
 from django.urls import reverse_lazy
 
 
+def dispatch(self, request, *args, **kwargs):
+    if not request.user.is_authenticated:
+        return redirect('%s' % reverse('webauth:login'))
+    return super().dispatch(request, *args, **kwargs)
+
+
 class FoodListView(ListView):
     model = Food
     template_name = 'food_list.html'
@@ -13,6 +19,7 @@ class FoodListView(ListView):
 class OrderListView(ListView):
     model = Order
     template_name = 'order_list.html'
+
 
 class CourierListView(ListView):
     model = Order
@@ -35,7 +42,7 @@ class FoodCreateView(CreateView):
     form_class = FoodForm
 
     def get_success_url(self):
-        return reverse('food_detail', kwargs={'pk': self.object.pk})
+        return reverse('webapp:food_detail', kwargs={'pk': self.object.pk})
 
 
 class FoodUpdateView(UpdateView):
@@ -44,7 +51,7 @@ class FoodUpdateView(UpdateView):
     form_class = FoodForm
 
     def get_success_url(self):
-        return reverse('food_detail', kwargs={'pk': self.object.pk})
+        return reverse('webapp:food_detail', kwargs={'pk': self.object.pk})
 
 
 class FoodDeleteView(DeleteView):
@@ -59,7 +66,7 @@ class OrderCreateView(CreateView):
     form_class = OrderForm
 
     def get_success_url(self):
-        return reverse('order_detail', kwargs={'pk': self.object.pk})
+        return reverse('webapp:order_detail', kwargs={'pk': self.object.pk})
 
 
 class OrderfoodCreateView(CreateView):
@@ -77,7 +84,7 @@ class OrderfoodCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('order_detail', kwargs={'pk': self.kwargs.get('pk')})
+        return reverse('webapp:order_detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
 class OrderfoodDeleteView(DeleteView):
@@ -85,7 +92,7 @@ class OrderfoodDeleteView(DeleteView):
     template_name = 'orderfood_delete.html'
 
     def get_success_url(self):
-        return reverse('order_detail', kwargs={'pk': get_object_or_404(OrderFood, pk=self.kwargs.get('pk')).order.pk})
+        return reverse('webapp:order_detail', kwargs={'pk': get_object_or_404(OrderFood, pk=self.kwargs.get('pk')).order.pk})
 
 
 class OrderUpdateView(UpdateView):
@@ -94,7 +101,7 @@ class OrderUpdateView(UpdateView):
     form_class = OrderForm
 
     def get_success_url(self):
-        return reverse('order_detail', kwargs={'pk': self.object.pk})
+        return reverse('webapp:order_detail', kwargs={'pk': self.object.pk})
 
 
 
@@ -102,21 +109,21 @@ def order_cancel(request, order_pk):
     order = get_object_or_404(Order, pk=order_pk)
     order.status = 'Отменён'
     order.save()
-    return redirect('order_list')
+    return redirect('webapp:order_list')
 
 
 def order_done(request, order_pk):
     order = get_object_or_404(Order, pk=order_pk)
     order.status = 'Готов'
     order.save()
-    return redirect('order_list')
+    return redirect('webapp:order_list')
 
 
 def order_delivered(request, order_pk):
     order = get_object_or_404(Order, pk=order_pk)
     order.status = 'Доставлен'
     order.save()
-    return redirect('order_list')
+    return redirect('webapp:order_list')
 
 
 class CourierUpdateView(UpdateView):
@@ -125,4 +132,4 @@ class CourierUpdateView(UpdateView):
     form_class = CourierForm
 
     def get_success_url(self):
-        return reverse('courier_list')
+        return reverse('webapp:courier_list')
