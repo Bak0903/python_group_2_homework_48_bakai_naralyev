@@ -7,10 +7,10 @@
       <div class="card-body">
         <h5 class="card-title">{{ food.name }}</h5>
         <p class="card-text">{{ food.description }}</p>
-        <a href="{% url 'food_delete' food.pk %}" class="btn btn-primary float-right ml-2">Удалить</a>
-        <a href="{% url 'food_update' food.pk %}" class="btn btn-primary float-right ml-2">Редактировать</a>
+        <a href="{% url 'webapp:food_delete' food.pk %}" class="btn btn-primary float-right ml-2">Удалить</a>
+        <a href="{% url 'webapp:food_update' food.pk %}" class="btn btn-primary float-right ml-2">Редактировать</a>
       </div>
-      <img class="card-img-bottom" src="../uploads/{{ food.photo }}" alt="Card image cap">
+      <img class="card-img-bottom" src="{{ food.photo.url }}" alt="Card image cap">
     </div>
 
 {% endblock %}

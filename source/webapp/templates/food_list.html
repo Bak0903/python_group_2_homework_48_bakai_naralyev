@@ -4,9 +4,9 @@
         <div class="card-group">
             {% for food in food_list %}
                 <div class="card">
-                <a href="{% url 'food_detail' food.pk %}"><img class="card-img-top" src="../uploads/{{ food.photo }}" alt="Card image cap" height="250px" width="350px"></a>
+                <a href="{% url 'webapp:food_detail' food.pk %}"><img class="card-img-top" src="{{ food.photo.url }}" alt="Card image cap" height="250px" width="350px"></a>
                     <div class="card-body">
-                    <a href="{% url 'food_detail' food.pk %}"><h5 class="card-title">{{ food.name }}</h5></a>
+                    <a href="{% url 'webapp:food_detail' food.pk %}"><h5 class="card-title">{{ food.name }}</h5></a>
                     <p class="card-text">{{ food.description }}</p>
                     </div>
                 </div>

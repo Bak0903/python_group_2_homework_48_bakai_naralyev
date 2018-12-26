@@ -15,11 +15,11 @@
   <tbody>
     {% for order in order_list %}
     <tr>
-      <th scope="row"><a href="{% url 'order_detail' order.pk %}">{{ order.pk }}</a></th>
+      <th scope="row"><a href="{% url 'webapp:order_detail' order.pk %}">{{ order.pk }}</a></th>
       <td>{{ order.contact_name }}</td>
       <td>{{ order.contact_phone }}</td>
       <td>{{ order.status }}</td>
-      <td><a href="{% url 'order_detail' order.pk %}">Подробнее...</a></td>
+      <td><a href="{% url 'webapp:order_detail' order.pk %}">Подробнее...</a></td>
 
     </tr>
     {% endfor %}

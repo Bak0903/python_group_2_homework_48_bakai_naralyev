@@ -2,7 +2,7 @@
 {% block title %}Статьи{% endblock %}
 {% block content %}
     <h1>Новая еда</h1>
-    <form action="{% url 'food_create' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'webapp:food_create' %}" method="post" enctype="multipart/form-data">
         {% include 'fill_form.html' %}
     </form>
 
