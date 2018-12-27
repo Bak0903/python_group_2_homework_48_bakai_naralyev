@@ -2,12 +2,6 @@ from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import authenticate, login, logout
 
 
-def dispatch(self, request, *args, **kwargs):
-    if not request.user.is_authenticated:
-        return redirect('%s' % reverse('webauth:login'))
-    return super().dispatch(request, *args, **kwargs)
-
-
 def login_view(request):
 
     context = {}

@@ -5,20 +5,24 @@ from webapp.form import FoodForm, OrderForm, OrderfoodForm, CourierForm
 from django.urls import reverse_lazy
 
 
-def dispatch(self, request, *args, **kwargs):
-    if not request.user.is_authenticated:
-        return redirect('%s' % reverse('webauth:login'))
-    return super().dispatch(request, *args, **kwargs)
-
-
 class FoodListView(ListView):
     model = Food
     template_name = 'food_list.html'
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return redirect('%s' % reverse('webauth:login'))
+    #     return super().dispatch(request, *args, **kwargs)
 
 
 class OrderListView(ListView):
     model = Order
     template_name = 'order_list.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('%s' % reverse('webauth:login'))
+        return super().dispatch(request, *args, **kwargs)
 
 
 class CourierListView(ListView):
