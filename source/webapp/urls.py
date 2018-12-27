@@ -3,7 +3,7 @@ from webapp.views import FoodDetailView, OrderDetailView,\
                             FoodListView, OrderListView,\
                             FoodCreateView, FoodDeleteView, FoodUpdateView,\
                             OrderCreateView, OrderfoodCreateView, OrderUpdateView, OrderfoodDeleteView,\
-                            order_cancel, order_done, order_delivered, CourierUpdateView, CourierListView
+                            order_cancel, order_done, order_delivered, courier_select, CourierListView
 
 app_name = 'webapp'
 
@@ -27,5 +27,5 @@ urlpatterns = [
     path('order/<int:order_pk>/cancel', order_cancel, name='order_cancel'),
     path('order/<int:order_pk>/done', order_done, name='order_done'),
     path('order/<int:order_pk>/delivered', order_delivered, name='order_delivered'),
-    path('order/<int:pk>/courier', CourierUpdateView.as_view(), name='courier'),
+    path('order/<int:order_pk>/courier', courier_select, name='courier'),
 ]

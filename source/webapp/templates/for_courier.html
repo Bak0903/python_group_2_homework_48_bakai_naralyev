@@ -25,8 +25,11 @@
       <td><a href="{% url 'webapp:order_detail' order.pk %}">Подробнее...</a></td>
       <td>
       {% if order.status == 'Готов' %}
-      <a href="{% url 'webapp:courier' order.pk %}"><button type="submit" class="btn btn-primary mb-2">Взять заказ</button></a><br/>
+
+          <a href="{% url 'webapp:courier' order.pk %}"><button type="submit" class="btn btn-primary mb-2">Взять</button></a>
+
       {% endif %}
+
       </td>
       <td>
       {% if order.status == 'В пути' %}
