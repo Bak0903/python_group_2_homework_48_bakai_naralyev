@@ -9,6 +9,7 @@
       <th scope="col">Заказчик</th>
       <th scope="col">Телефонный номер</th>
       <th scope="col">Статус</th>
+      <th scope="col">Оператор</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
       <td>{{ order.contact_name }}</td>
       <td>{{ order.contact_phone }}</td>
       <td>{{ order.status }}</td>
+      <td>{{ order.operator }}</td>
       <td><a href="{% url 'webapp:order_detail' order.pk %}">Подробнее...</a></td>
 
     </tr>

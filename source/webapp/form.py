@@ -16,7 +16,7 @@ class FoodForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        exclude = ['courier', 'status']
+        exclude = ['courier', 'status', 'operator']
 
 
 class OrderfoodForm(forms.ModelForm):

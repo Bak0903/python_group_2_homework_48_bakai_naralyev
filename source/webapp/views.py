@@ -6,10 +6,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
-class FoodListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    model = Food
-    template_name = 'food_list.html'
-    permission_required = 'webapp.view_food'
+class CourierListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    model = Order
+    template_name = 'for_courier.html'
+    permission_required = 'webapp.view_order'
 
 
 class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -18,22 +18,36 @@ class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'webapp.view_order'
 
 
-class CourierListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Order
-    template_name = 'for_courier.html'
-    permission_required = 'webapp.view_courier'
+    template_name = 'order_detail.html'
+    permission_required = 'webapp.view_order'
+
+
+class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Order
+    template_name = 'order_create.html'
+    form_class = OrderForm
+    permission_required = 'webapp.add_order'
+
+    def form_valid(self, form):
+        form.instance.operator = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('webapp:order_detail', kwargs={'pk': self.object.pk})
+
+
+class FoodListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    model = Food
+    template_name = 'food_list.html'
+    permission_required = 'webapp.view_food'
 
 
 class FoodDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Food
     template_name = 'food_detail.html'
     permission_required = 'webapp.view_food'
-
-
-class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    model = Order
-    template_name = 'order_detail.html'
-    permission_required = 'webapp.view_order'
 
 
 class FoodCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -61,16 +75,6 @@ class FoodDeleteView(DeleteView):
     template_name = 'food_delete.html'
     success_url = reverse_lazy('food_list')
     permission_required = 'webapp.delete_food'
-
-
-class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    model = Order
-    template_name = 'order_create.html'
-    form_class = OrderForm
-    permission_required = 'webapp.add_order'
-
-    def get_success_url(self):
-        return reverse('webapp:order_detail', kwargs={'pk': self.object.pk})
 
 
 class OrderfoodCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -109,7 +113,6 @@ class OrderUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('webapp:order_detail', kwargs={'pk': self.object.pk})
-
 
 
 def order_cancel(request, order_pk):
