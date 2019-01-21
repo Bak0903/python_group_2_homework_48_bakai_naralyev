@@ -77,8 +77,8 @@ function onCreateSuccess(response, status) {
     let editTd = $('<td></td>')
         .append(editLink)
     let deleteLink = $('<a></a>')
-        .addClass('btn btn-primary float-right')
-        .attr('href', '#')
+        .addClass('delete-link btn btn-primary float-right')
+        .attr('href', response.delete_url)
         .text('Удалить')
         .click(onOrderFoodDelete);
 
@@ -168,6 +168,6 @@ window.addEventListener('load', function () {
         $('#food_form').submit();
     });
     $("#order_food_add_link").click(onOrderFoodCreate);
-    $('#order_food_list.edit_link').click(onOrderFoodUpdate);
-    $('#order_food_list.delete_link').click(onOrderFoodDelete);
+    $('.edit_link').click(onOrderFoodUpdate);
+    $('.delete_link').click(onOrderFoodDelete);
 });

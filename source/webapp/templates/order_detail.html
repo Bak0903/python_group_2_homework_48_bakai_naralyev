@@ -52,7 +52,6 @@
 
                     {% if order.status == 'Новый' %}
                     <a class="btn btn-primary float-right delete_link"  href="{% url 'webapp:order_food_delete' order_food.pk %}" data-pk="{{ order_food.food.pk }}">
-
                         Удалить
                     </a>
                     {% endif %}
