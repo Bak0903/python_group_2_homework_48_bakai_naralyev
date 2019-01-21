@@ -1,9 +1,10 @@
 from django.shortcuts import reverse,redirect, get_object_or_404, render
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView, FormView
 from webapp.models import Food, OrderFood, Order, Employee
 from webapp.form import FoodForm, OrderForm, OrderfoodForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import JsonResponse
 
 
 class CourierListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -18,10 +19,11 @@ class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'webapp.view_order'
 
 
-class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView, FormView):
     model = Order
     template_name = 'order_detail.html'
     permission_required = 'webapp.view_order'
+    form_class = OrderfoodForm
 
 
 class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -142,3 +144,49 @@ def courier_select(request, order_pk):
     order.status = 'В пути'
     order.save()
     return redirect('webapp:courier_list')
+
+
+class OrderFoodAjaxCreateView(CreateView):
+    model = OrderFood
+    form_class = OrderfoodForm
+
+    # обработка формы без ошибок
+    def form_valid(self, form):
+        order = get_object_or_404(Order, pk=self.kwargs.get('pk'))
+        form.instance.order = order
+        order_food = form.save()
+        return JsonResponse({
+            'food_name': order_food.food.name,
+            'food_pk': order_food.food.pk,
+            'amount': order_food.amount,
+            'pk': order_food.pk,
+            'edit_url': reverse('webapp:order_food_update', kwargs={'pk': order_food.pk})
+        })
+
+    # обработка формы с ошибками
+    # статус 422 - UnprocessableEntity, применяется,
+    # когда запрос имеет корректный формат,
+    # но неподходящие по смыслу данные (например, пустые).
+    def form_invalid(self, form):
+        return JsonResponse({
+            'errors': form.errors
+        }, status='422')
+
+
+class OrderFoodAjaxUpdateView(UpdateView):
+    model = OrderFood
+    form_class = OrderfoodForm
+
+    def form_valid(self, form):
+        order_food = form.save()
+        return JsonResponse({
+            'food_name': order_food.food.name,
+            'food_pk': order_food.food.pk,
+            'amount': order_food.amount,
+            'pk': order_food.pk
+        })
+
+    def form_invalid(self, form):
+        return JsonResponse({
+            'errors': form.errors
+        }, status='422')
