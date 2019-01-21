@@ -150,7 +150,6 @@ class OrderFoodAjaxCreateView(CreateView):
     model = OrderFood
     form_class = OrderfoodForm
 
-    # обработка формы без ошибок
     def form_valid(self, form):
         order = get_object_or_404(Order, pk=self.kwargs.get('pk'))
         form.instance.order = order
@@ -163,10 +162,6 @@ class OrderFoodAjaxCreateView(CreateView):
             'edit_url': reverse('webapp:order_food_update', kwargs={'pk': order_food.pk})
         })
 
-    # обработка формы с ошибками
-    # статус 422 - UnprocessableEntity, применяется,
-    # когда запрос имеет корректный формат,
-    # но неподходящие по смыслу данные (например, пустые).
     def form_invalid(self, form):
         return JsonResponse({
             'errors': form.errors
@@ -190,3 +185,23 @@ class OrderFoodAjaxUpdateView(UpdateView):
         return JsonResponse({
             'errors': form.errors
         }, status='422')
+
+
+class OrderFoodAjaxDeleteView(DeleteView):
+    model = OrderFood
+
+
+    def delete(self, request, *args, **kwargs):
+        delete_food = get_object_or_404(OrderFood, pk=self.kwargs.get('pk'))
+        pk = delete_food.pk
+        delete_food.delete()
+        return JsonResponse({
+            'pk': pk
+        })
+
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('webapp:order_detail',
+            kwargs={'pk': get_object_or_404(OrderFood, pk=self.kwargs.get('pk')).order.pk})

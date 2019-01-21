@@ -33,9 +33,7 @@
                   <td>
 
                     {% if order.status == 'Новый' %}
-                    <a class="btn btn-primary float-right" href="{% url 'webapp:food_delete' order_food.pk %}">
-
-
+                    <a class="edit_link btn btn-primary float-right"  href="{% url 'webapp:order_food_update' order_food.pk %}" data-pk="{{ order_food.food.pk }}">
                         Изменить
                     </a>
                     {% endif %}
@@ -45,8 +43,7 @@
                   <td>
 
                     {% if order.status == 'Новый' %}
-                    <a class="btn btn-primary float-right" href="{% url 'webapp:food_delete' order_food.pk %}">
-
+                    <a class="btn btn-primary float-right delete_link"  href="{% url 'webapp:order_food_delete' order_food.pk %}" data-pk="{{ order_food.food.pk }}">
 
                         Удалить
                     </a>

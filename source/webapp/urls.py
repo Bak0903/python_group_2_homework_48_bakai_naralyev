@@ -4,7 +4,7 @@ from webapp.views import FoodDetailView, OrderDetailView,\
                             FoodCreateView, FoodDeleteView, FoodUpdateView,\
                             OrderCreateView, OrderfoodCreateView, OrderUpdateView, OrderfoodDeleteView,\
                             order_cancel, order_done, order_delivered, courier_select, CourierListView,\
-                            OrderFoodAjaxCreateView, OrderFoodAjaxUpdateView
+                            OrderFoodAjaxCreateView, OrderFoodAjaxUpdateView, OrderFoodAjaxDeleteView
 
 app_name = 'webapp'
 
@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('order/<int:pk>/food/create', OrderFoodAjaxCreateView.as_view(), name='order_food_create'),
     path('order/food/<int:pk>/update', OrderFoodAjaxUpdateView.as_view(), name='order_food_update'),
+    path('order/food/<int:pk>/delete', OrderFoodAjaxDeleteView.as_view(), name='order_food_delete'),
 
     path('order/<int:order_pk>/cancel', order_cancel, name='order_cancel'),
     path('order/<int:order_pk>/done', order_done, name='order_done'),
