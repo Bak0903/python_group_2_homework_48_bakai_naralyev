@@ -24,11 +24,19 @@
         <h5 class="card-title">Корзина</h5>
 
         <table class="table">
+        <thead>
+            <tr>
+              <th scope="col" class="h4">Блюдо</th>
+              <th scope="col" class="h4">Количесто(шт.)</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+        </thead>
           <tbody id="order_food_list">
           {% for order_food in order.foods.all %}
               <tr id="order_food_{{ order_food.pk }}">
                   <th id="order_food_name_{{ order_food.pk }}"  scope="row">{{ order_food.food.name }}</th>
-                  <td id="order_food_amount_{{ order_food.pk }}">{{ order_food.amount }} шт.</td>
+                  <td id="order_food_amount_{{ order_food.pk }}">{{ order_food.amount }}</td>
 
                   <td>
 

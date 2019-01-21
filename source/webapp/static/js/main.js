@@ -67,7 +67,7 @@ function onCreateSuccess(response, status) {
         .text(response.food_name)
     let foodAmountTd = $('<td></td>')
         .attr('id', 'order_food_amount_' + response.pk)
-        .text(response.amount + ' шт.');
+        .text(response.amount);
     let editLink = $('<a></a>')
         .addClass('edit_link btn btn-primary float-right')
         .attr('href', response.edit_url)
@@ -133,7 +133,7 @@ function onUpdateSuccess(response, status) {
     let food_name_th = $('#order_food_name_' + pk);
     food_name_th.text(response.food_name);
     food_name_th.data('food_pk', response.food_pk);
-    $('#order_food_amount_' + pk).text(response.amount + " шт.");
+    $('#order_food_amount_' + pk).text(response.amount);
 
     $('#food_edit_modal').modal('hide');
 }

@@ -190,7 +190,6 @@ class OrderFoodAjaxUpdateView(UpdateView):
 class OrderFoodAjaxDeleteView(DeleteView):
     model = OrderFood
 
-
     def delete(self, request, *args, **kwargs):
         delete_food = get_object_or_404(OrderFood, pk=self.kwargs.get('pk'))
         pk = delete_food.pk
@@ -201,7 +200,3 @@ class OrderFoodAjaxDeleteView(DeleteView):
 
     def get(self, *args, **kwargs):
         return self.post(*args, **kwargs)
-
-    def get_success_url(self):
-        return reverse('webapp:order_detail',
-            kwargs={'pk': get_object_or_404(OrderFood, pk=self.kwargs.get('pk')).order.pk})
