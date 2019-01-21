@@ -23,3 +23,8 @@ class OrderfoodForm(forms.ModelForm):
     class Meta:
         model = OrderFood
         exclude = ['order']
+        # widgets = {
+        #     'food': forms.Select(attrs={'id': 'id_food'}),
+        #     'amount': forms.NumberInput(attrs={'id': 'id_amount'}),
+        #
+        # }
